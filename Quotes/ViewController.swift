@@ -13,6 +13,10 @@ class ViewController: UIViewController {
 
     // MARK: - Properties
 
+    private let segueAddQuoteViewController = "SegueAddQuoteViewController"
+
+    // MARK: -
+
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
@@ -63,6 +67,19 @@ class ViewController: UIViewController {
                 self.updateView()
             }
         }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+    }
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueAddQuoteViewController {
+            if let destinationViewController = segue.destination as? AddQuoteViewController {
+                // Configure View Controller
+                destinationViewController.managedObjectContext = persistentContainer.viewContext
+            }
+        }
     }
 
     // MARK: - View Methods
@@ -73,7 +90,7 @@ class ViewController: UIViewController {
         updateView()
     }
 
-    private func updateView() {
+    fileprivate func updateView() {
         var hasQuotes = false
 
         if let quotes = fetchedResultsController.fetchedObjects {
@@ -92,9 +109,51 @@ class ViewController: UIViewController {
         messageLabel.text = "You don't have any quotes yet."
     }
 
+    // MARK: - Notification Handling
+
+    func applicationDidEnterBackground(_ notification: Notification) {
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            print("Unable to Save Changes")
+            print("\(error), \(error.localizedDescription)")
+        }
+    }
+
 }
 
 extension ViewController: NSFetchedResultsControllerDelegate {
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+
+        updateView()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        default:
+            print("...")
+        }
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+
+    }
 
 }
 
@@ -118,6 +177,16 @@ extension ViewController: UITableViewDataSource {
         cell.contentsLabel.text = quote.contents
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Fetch Quote
+            let quote = fetchedResultsController.object(at: indexPath)
+
+            // Delete Quote
+            quote.managedObjectContext?.delete(quote)
+        }
     }
 
 }

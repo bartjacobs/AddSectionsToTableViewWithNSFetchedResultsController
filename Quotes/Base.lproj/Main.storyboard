@@ -49,7 +49,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zu-aE-REM">
-                                                    <rect key="frame" x="331.5" y="40" width="35.5" height="18"/>
+                                                    <rect key="frame" x="331" y="40" width="36" height="18"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -89,7 +89,13 @@
                             <constraint firstItem="4ij-w6-c3L" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="xSc-az-ThY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jiX-Cg-gF2"/>
+                    <navigationItem key="navigationItem" id="jiX-Cg-gF2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="g3Y-GH-hlQ">
+                            <connections>
+                                <segue destination="7KE-yi-QjF" kind="show" identifier="SegueAddQuoteViewController" id="Owt-nO-G6S"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="D5I-jN-qq2" id="rdx-aZ-AcD"/>
                         <outlet property="messageLabel" destination="4ij-w6-c3L" id="Uxe-VK-T0W"/>
@@ -99,6 +105,58 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1121" y="-555"/>
+        </scene>
+        <!--Add Quote View Controller-->
+        <scene sceneID="Nvi-lH-frp">
+            <objects>
+                <viewController id="7KE-yi-QjF" customClass="AddQuoteViewController" customModule="Quotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="W9p-ET-rJk"/>
+                        <viewControllerLayoutGuide type="bottom" id="hi7-nn-iPN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zVT-QS-JzL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mjp-tj-sVp">
+                                <rect key="frame" x="20" y="84" width="335" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sfc-w0-wk6">
+                                <rect key="frame" x="20" y="122" width="335" height="525"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sfc-w0-wk6" firstAttribute="leading" secondItem="zVT-QS-JzL" secondAttribute="leading" constant="20" id="Fj8-2K-Ee9"/>
+                            <constraint firstAttribute="trailing" secondItem="Mjp-tj-sVp" secondAttribute="trailing" constant="20" id="Jew-Us-6Es"/>
+                            <constraint firstItem="hi7-nn-iPN" firstAttribute="top" secondItem="sfc-w0-wk6" secondAttribute="bottom" constant="20" id="RLY-Gp-dm3"/>
+                            <constraint firstItem="sfc-w0-wk6" firstAttribute="top" secondItem="Mjp-tj-sVp" secondAttribute="bottom" constant="8" id="g85-Ee-r6E"/>
+                            <constraint firstItem="Mjp-tj-sVp" firstAttribute="top" secondItem="W9p-ET-rJk" secondAttribute="bottom" constant="20" id="rJa-SD-t9U"/>
+                            <constraint firstAttribute="trailing" secondItem="sfc-w0-wk6" secondAttribute="trailing" constant="20" id="yOa-Sz-YeB"/>
+                            <constraint firstItem="Mjp-tj-sVp" firstAttribute="leading" secondItem="zVT-QS-JzL" secondAttribute="leading" constant="20" id="zri-hf-h56"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Hgu-1I-OBB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="d46-Ky-5cm">
+                            <connections>
+                                <action selector="saveWithSender:" destination="7KE-yi-QjF" id="6LT-JA-odh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="authorTextField" destination="Mjp-tj-sVp" id="KR2-kb-Uba"/>
+                        <outlet property="contentsTextView" destination="sfc-w0-wk6" id="v99-Df-vsx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LFU-md-ydb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1887.2" y="-555.47226386806597"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="t8x-M6-fQD">
