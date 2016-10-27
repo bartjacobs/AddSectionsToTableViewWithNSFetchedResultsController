@@ -1,17 +1,11 @@
-### Populate a Table View With NSFetchedResultsController and Swift 3
+### Implement the NSFetchedResultsControllerDelegate Protocol With Swift 3
 
 #### Author: Bart Jacobs
 
-Even though you don't need to use the `NSFetchedResultsController` class to populate a table view, I find myself using it quite a bit in Core Data applications. Swift 3 has substantially improved support for Core Data and the `NSFetchedResultsController` class also benefits from these optimizations.
+In [yesterday's tutorial](https://cocoacasts.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/), we populated a table view with quotes using the `NSFetchedResultsController` class. But the table view is currently empty since we haven't added the ability to add quotes yet.
 
-In this tutorial, we create an application that manages a list of quotes. We populate a table view with quotes using the `NSFetchedResultsController` class. The tools we use are Swift 3 and Xcode 8.
+This tutorial focuses on the implementation of the `NSFetchedResultsControllerDelegate` protocol. It allows the application to respond to changes that take place in the managed object context it observes. The fetched results controller notifies its delegate when the data it manages is modified. If we correctly implement the protocol, updating the table view after a change is a breeze.
 
-## Setting Up the Project
+To follow along, clone or download the project from the [previous tutorial](https://cocoacasts.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/) from [GitHub](https://github.com/bartjacobs/PopulateATableViewWithNSFetchedResultsControllerAndSwift3).
 
-Create a new project in Xcode and choose the **Single View Application** template. Name the project **Quotes** and make sure the **Use Core Data** checkbox is unchecked. We won't be using Xcode's Core Data template.
-
-![Setting Up the Project In Xcode 8](https://cocoacasts.s3.amazonaws.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/figure-project-setup-1.jpg)
-
-![Setting Up the Project In Xcode 8](https://cocoacasts.s3.amazonaws.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/figure-project-setup-2.jpg)
-
-**Read this article on [Cocoacasts](https://cocoacasts.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/)**.
+**Read this article on [Cocoacasts](https://cocoacasts.com/implement-the-nsfetchedresultscontrollerdelegate-protocol-with-swift-3/)**.
