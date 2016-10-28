@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     // MARK: - Properties
 
     private let segueAddQuoteViewController = "SegueAddQuoteViewController"
+    private let segueEditQuoteViewController = "SegueEditQuoteViewController"
 
     // MARK: -
 
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
         let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
 
         // Configure Fetch Request
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: true)]
 
         // Create Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -47,6 +48,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "Quotes"
 
         persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
             if let error = error {
@@ -74,11 +77,14 @@ class ViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == segueAddQuoteViewController {
-            if let destinationViewController = segue.destination as? AddQuoteViewController {
-                // Configure View Controller
-                destinationViewController.managedObjectContext = persistentContainer.viewContext
-            }
+        guard let destinationViewController = segue.destination as? AddQuoteViewController else { return }
+
+        // Configure View Controller
+        destinationViewController.managedObjectContext = persistentContainer.viewContext
+
+        if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditQuoteViewController {
+            // Configure View Controller
+            destinationViewController.quote = fetchedResultsController.object(at: indexPath)
         }
     }
 
@@ -146,8 +152,20 @@ extension ViewController: NSFetchedResultsControllerDelegate {
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             break;
-        default:
-            print("...")
+        case .update:
+            if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? QuoteTableViewCell {
+                configure(cell, at: indexPath)
+            }
+            break;
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+            break;
         }
     }
 
@@ -169,14 +187,19 @@ extension ViewController: UITableViewDataSource {
             fatalError("Unexpected Index Path")
         }
 
+        // Configure Cell
+        configure(cell, at: indexPath)
+
+        return cell
+    }
+
+    func configure(_ cell: QuoteTableViewCell, at indexPath: IndexPath) {
         // Fetch Quote
         let quote = fetchedResultsController.object(at: indexPath)
 
         // Configure Cell
         cell.authorLabel.text = quote.author
         cell.contentsLabel.text = quote.contents
-
-        return cell
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -187,6 +210,14 @@ extension ViewController: UITableViewDataSource {
             // Delete Quote
             quote.managedObjectContext?.delete(quote)
         }
+    }
+
+}
+
+extension ViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }

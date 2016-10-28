@@ -39,7 +39,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dbd-Zc-TPB" id="9ln-uq-GHi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hjs-gX-Qi2">
@@ -67,6 +67,7 @@
                                         <connections>
                                             <outlet property="authorLabel" destination="7Zu-aE-REM" id="10Z-SV-h1B"/>
                                             <outlet property="contentsLabel" destination="Hjs-gX-Qi2" id="hsN-II-Yu5"/>
+                                            <segue destination="7KE-yi-QjF" kind="show" identifier="SegueEditQuoteViewController" id="hpd-zL-Xhj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -177,4 +178,7 @@
             <point key="canvasLocation" x="344.80000000000001" y="-543.77811094452773"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="hpd-zL-Xhj"/>
+    </inferredMetricsTieBreakers>
 </document>

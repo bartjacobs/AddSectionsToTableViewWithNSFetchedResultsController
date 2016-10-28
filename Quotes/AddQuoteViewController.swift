@@ -18,6 +18,10 @@ class AddQuoteViewController: UIViewController {
 
     // MARK: -
 
+    var quote: Quote?
+
+    // MARK: -
+
     var managedObjectContext: NSManagedObjectContext?
 
     // MARK: - View Life Cycle
@@ -26,6 +30,11 @@ class AddQuoteViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Add Quote"
+
+        if let quote = quote {
+            authorTextField.text = quote.author
+            contentsTextView.text = quote.contents
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -39,13 +48,22 @@ class AddQuoteViewController: UIViewController {
     @IBAction func save(sender: UIBarButtonItem) {
         guard let managedObjectContext = managedObjectContext else { return }
 
-        // Create Quote
-        let quote = Quote(context: managedObjectContext)
+        if quote == nil {
+            // Create Quote
+            let newQuote = Quote(context: managedObjectContext)
 
-        // Configure Quote
-        quote.author = authorTextField.text
-        quote.contents = contentsTextView.text
-        quote.createdAt = Date().timeIntervalSince1970
+            // Configure Quote
+            newQuote.createdAt = Date().timeIntervalSince1970
+
+            // Set Quote
+            quote = newQuote
+        }
+
+        if let quote = quote {
+            // Configure Quote
+            quote.author = authorTextField.text
+            quote.contents = contentsTextView.text
+        }
 
         // Pop View Controller
         _ = navigationController?.popViewController(animated: true)
