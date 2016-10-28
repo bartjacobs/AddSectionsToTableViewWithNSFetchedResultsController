@@ -1,11 +1,11 @@
-### Implement the NSFetchedResultsControllerDelegate Protocol With Swift 3
+### Respond to Updates Using the NSFetchedResultsControllerDelegate Protocol
 
 #### Author: Bart Jacobs
 
-In [yesterday's tutorial](https://cocoacasts.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/), we populated a table view with quotes using the `NSFetchedResultsController` class. But the table view is currently empty since we haven't added the ability to add quotes yet.
+We can now add and remove quotes and the table view is updated accordingly. But everyone makes a mistake from time to time and we don't want to remove a quote because of a silly mistake.
 
-This tutorial focuses on the implementation of the `NSFetchedResultsControllerDelegate` protocol. It allows the application to respond to changes that take place in the managed object context it observes. The fetched results controller notifies its delegate when the data it manages is modified. If we correctly implement the protocol, updating the table view after a change is a breeze.
+In this tutorial, we add the ability to update quotes. Not only do we want the table view to reflect the changes we make to a quote, we also want to make sure the sort order of the quotes is updated when a quote is modified. You guessed it. The `NSFetchedResultsController` class and the `NSFetchedResultsControllerDelegate` protocol make this almost trivial.
 
-To follow along, clone or download the project from the [previous tutorial](https://cocoacasts.com/populate-a-table-view-with-nsfetchedresultscontroller-and-swift-3/) from [GitHub](https://github.com/bartjacobs/PopulateATableViewWithNSFetchedResultsControllerAndSwift3).
+To follow along, clone or download the project from the [previous tutorial](https://cocoacasts.com/implement-the-nsfetchedresultscontrollerdelegate-protocol-with-swift-3/) from [GitHub](https://github.com/bartjacobs/ImplementTheNSFetchedResultsControllerDelegateProtocolWithSwift3).
 
-**Read this article on [Cocoacasts](https://cocoacasts.com/implement-the-nsfetchedresultscontrollerdelegate-protocol-with-swift-3/)**.
+**Read this article on [Cocoacasts](https://cocoacasts.com/respond-to-updates-using-the-nsfetchedresultscontrollerdelegate-protocol/)**.
