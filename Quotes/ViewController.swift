@@ -33,10 +33,10 @@ class ViewController: UIViewController {
         let fetchRequest: NSFetchRequest<Quote> = Quote.fetchRequest()
 
         // Configure Fetch Request
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Quote.createdAt), ascending: true)]
 
         // Create Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.persistentContainer.viewContext, sectionNameKeyPath: #keyPath(Quote.author), cacheName: nil)
 
         // Configure Fetched Results Controller
         fetchedResultsController.delegate = self
@@ -170,16 +170,33 @@ extension ViewController: NSFetchedResultsControllerDelegate {
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        default:
+            break;
+        }
     }
 
 }
 
 extension ViewController: UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let sections = fetchedResultsController.sections else { return 0 }
+        return sections.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let quotes = fetchedResultsController.fetchedObjects else { return 0 }
-        return quotes.count
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { fatalError("Unexpected Section") }
+        return sectionInfo.numberOfObjects
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { fatalError("Unexpected Section") }
+        return sectionInfo.name
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
