@@ -1,11 +1,9 @@
-### Respond to Updates Using the NSFetchedResultsControllerDelegate Protocol
+### Add Sections to Table View With NSFetchedResultsController and Swift 3
 
 #### Author: Bart Jacobs
 
-We can now add and remove quotes and the table view is updated accordingly. But everyone makes a mistake from time to time and we don't want to remove a quote because of a silly mistake.
+[Earlier in this series](https://cocoacasts.com/series/core-data-with-nsfetchedresultscontroller-and-swift-3/), I already mentioned that the `NSFetchedResultsController` class was designed for table views—and collection views. This also means that it has no problem managing hierarchical data to populate a table view with sections.
 
-In this tutorial, we add the ability to update quotes. Not only do we want the table view to reflect the changes we make to a quote, we also want to make sure the sort order of the quotes is updated when a quote is modified. You guessed it. The `NSFetchedResultsController` class and the `NSFetchedResultsControllerDelegate` protocol make this almost trivial.
+In this tutorial, we add sections to the table view of quotes. Each section contains the quotes of a particular author. If you want to follow along, clone or download the repository from [GitHub](https://github.com/bartjacobs/RespondToUpdatesUsingTheNSFetchedResultsControllerDelegateProtocol).
 
-To follow along, clone or download the project from the [previous tutorial](https://cocoacasts.com/implement-the-nsfetchedresultscontrollerdelegate-protocol-with-swift-3/) from [GitHub](https://github.com/bartjacobs/ImplementTheNSFetchedResultsControllerDelegateProtocolWithSwift3).
-
-**Read this article on [Cocoacasts](https://cocoacasts.com/respond-to-updates-using-the-nsfetchedresultscontrollerdelegate-protocol/)**.
+**Read this article on [Cocoacasts](https://cocoacasts.com/add-sections-to-table-view-with-nsfetchedresultscontroller-and-swift-3/)**.
